@@ -1,7 +1,7 @@
 import { Avatar, Card, CardContent, Typography } from "@material-ui/core";
 import React, { useEffect } from "react";
 
-const LoginSuccess = () => {
+const LoginError = () => {
   useEffect(() => {
     setTimeout(() => {
       window.close();
@@ -19,17 +19,17 @@ const LoginSuccess = () => {
         }}
       >
         <Avatar
-          src="/assets/icons/success.png"
-          alt="Success"
+          src="/assets/icons/error.png"
+          alt="Error"
           style={{ width: 100 }}
         />
         <br />
-        <Typography variant="h5" style={{ color: "#04c204", fontWeight: 700 }}>
-          Authenticated!
+        <Typography variant="h5" color="secondary" style={{ fontWeight: 700 }}>
+          Authentication failed!
         </Typography>
       </CardContent>
     </Card>
   );
 };
 
-export default LoginSuccess;
+export default LoginError;

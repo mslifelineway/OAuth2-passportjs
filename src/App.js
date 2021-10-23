@@ -5,6 +5,8 @@ import { pagePaths } from "./utils/constants";
 import ProtectedRoute from "./components/HOC/ProtectedRoute";
 import Dashboard from "./containers/Dashboard";
 import LoginSuccess from "./containers/LoginSuccess";
+import LoginError from "./containers/LoginError";
+import Page404 from "./containers/Page404";
 
 function App() {
   return (
@@ -13,7 +15,9 @@ function App() {
       <Route exact path={pagePaths.root} component={Auth} />
       <Route exact path={pagePaths.auth} component={Auth} />
       <Route path={pagePaths.authSuccess} component={LoginSuccess} />
+      <Route path={pagePaths.authFailed} component={LoginError} />
       <ProtectedRoute path={pagePaths.dashboard} component={Dashboard} />
+      <Route path={pagePaths.all} component={Page404} />
     </Switch>
   );
 }

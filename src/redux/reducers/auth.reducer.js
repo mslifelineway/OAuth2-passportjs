@@ -1,6 +1,5 @@
 import { authActions, userActions } from "../actions/actions.types";
 import { toast } from "react-toastify";
-import { pagePaths } from "../../utils/constants";
 
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -27,9 +26,6 @@ const userReducer = (state = initialState, action) => {
         loading: false,
       };
       toast(action.payload.message);
-      setTimeout(() => {
-        window.location = pagePaths.dashboard;
-      }, 1000);
       break;
     case userActions.getUserFailure:
       state = {
@@ -57,11 +53,19 @@ const userReducer = (state = initialState, action) => {
       toast(action.payload.message);
       break;
     case authActions.logoutFailure:
+      //in failed case also need to logout the user
       state = {
         ...state,
         message: action.payload.message,
         loading: false,
       };
+      state = {
+        ...state,
+        user: null,
+        message: action.payload.message,
+        loading: false,
+      };
+      localStorage.removeItem("user");
       toast.error(action.payload.message);
       break;
     default:
