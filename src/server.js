@@ -47,6 +47,9 @@ server.get("/", (_, res) => {
   });
 });
 
+//passport setup milddeware - should be before linking routers
+require("./middlewares/passport.setup.middleware");
+
 //linking routers
 fs.readdirSync(__dirname + "/routes").forEach(function (file) {
   const name = file.substr(0, file.indexOf("."));
@@ -55,7 +58,7 @@ fs.readdirSync(__dirname + "/routes").forEach(function (file) {
 });
 
 //error handling
-server.use((err, _, res) => {
+server.use((err, req, res, next) => {
   res.status(err.status || statusCodes.internalServerError);
   return res.json({
     error: {

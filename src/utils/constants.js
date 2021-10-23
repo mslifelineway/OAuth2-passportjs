@@ -1,13 +1,23 @@
 exports.urls = {
   clientUrl: "http://localhost:3000",
   googleAuthRedirectUrl: "auth/google/callback",
+  gitHubAuthRedirectUrl: "auth/github/callback",
+  linkedinAuthRedirectUrl: "auth/linkedin/callback",
+  facebookAuthRedirectUrl: "auth/facebook/callback",
+  twitterAuthRedirectUrl: "auth/twitter/callback",
+  spotifyAuthRedirectUrl: "auth/spotify/callback",
+  twitchAuthRedirectUrl: "auth/twitch/callback",
 };
 
 exports.authTypes = {
   google: "google",
   facebook: "facebook",
   github: "github",
-  linkedIn: "linkedIn",
+  linkedin: "linkedin",
+  facebook: "facebook",
+  twitter: "twitter",
+  spotify: "spotify",
+  twitch: "twitch",
 };
 
 exports.authScopes = {
@@ -15,12 +25,24 @@ exports.authScopes = {
 };
 
 exports.routePaths = {
-  googleAuth: "/google",
-  googleAuthCallback: "/google/callback",
   authFail: `${this.urls.clientUrl}/auth/error`,
   authSuccess: `${this.urls.clientUrl}/auth/success`,
   getUser: "/getUser",
   logout: "/logout",
+  googleAuth: "/google",
+  googleAuthCallback: "/google/callback",
+  githubAuth: "/github",
+  gitHubAuthCallback: "/github/callback",
+  linkedinAuth: "/linkedin",
+  linkedinAuthCallback: "/linkedin/callback",
+  facebookAuth: "/facebook",
+  facebookAuthCallback: "/facebook/callback",
+  twitterAuth: "/twitter",
+  twitterAuthCallback: "/twitter/callback",
+  spotifyAuth: "/spotify",
+  spotifyAuthCallback: "/spotify/callback",
+  twitchAuth: "/twitch",
+  twitchAuthCallback: "/twitch/callback",
 };
 
 exports.statusCodes = {

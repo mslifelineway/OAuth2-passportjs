@@ -9,45 +9,20 @@ const {
 } = require("../utils/constants");
 const User = require("../models/user.model");
 
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-
 const passport = require("passport");
-const { isUserAuthenticated } = require("../middlewares/auth");
+const { isUserAuthenticated } = require("../middlewares/auth.middleware");
 
 module.exports = (router, server) => {
-  passport.use(
-    new GoogleStrategy(
-      {
-        clientID: `${process.env.GOOGLE_CLIENT_ID}`,
-        clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
-        callbackURL: `/api/${urls.googleAuthRedirectUrl}`,
-      },
-      function (_, __, profile, cb) {
-        User.findOne({ googleId: profile.id }, async (err, doc) => {
-          if (err) {
-            return cb(err, null);
-          }
-
-          if (!doc) {
-            const newUser = new User({
-              googleId: profile.id,
-              username: profile.name.givenName,
-            });
-
-            await newUser.save();
-            cb(null, newUser);
-          }
-          cb(null, doc);
-        });
-      }
+  //google auth request handler
+  router.get(
+    routePaths.googleAuth,
+    passport.authenticate(
+      authTypes.google,
+      { scope: ["profile", "email"] }
     )
   );
 
-  router.get(
-    routePaths.googleAuth,
-    passport.authenticate(authTypes.google, { scope: [authScopes.profile] })
-  );
-
+  //google auth callback handler
   router.get(
     routePaths.googleAuthCallback,
     passport.authenticate(authTypes.google, {
@@ -59,12 +34,138 @@ module.exports = (router, server) => {
     }
   );
 
+  //github auth request handler
+  router.get(
+    routePaths.githubAuth,
+    passport.authenticate(authTypes.github, { scope: ["user:email"] })
+  );
+
+  //github auth callback handler
+  router.get(
+    routePaths.gitHubAuthCallback,
+    passport.authenticate(authTypes.github, {
+      failureRedirect: routePaths.authFail,
+      session: true,
+    }),
+    function (req, res) {
+      return res.redirect(routePaths.authSuccess);
+    }
+  );
+
+  //linkedin auth request handler
+  router.get(
+    routePaths.linkedinAuth,
+    passport.authenticate(authTypes.linkedin, {
+      scope: ["r_basicprofile", "r_emailaddress"],
+    })
+  );
+
+  //linkedin auth callback handler
+  router.get(
+    routePaths.linkedinAuthCallback,
+    passport.authenticate(authTypes.linkedin, {
+      failureRedirect: routePaths.authFail,
+      session: true,
+    }),
+    function (req, res) {
+      return res.redirect(routePaths.authSuccess);
+    }
+  );
+
+  //facebook auth request handler
+  router.get(
+    routePaths.facebookAuth,
+    passport.authenticate(authTypes.facebook, {
+      // scope: [authScopes.profile],
+      scope: ["user_friends", "manage_pages"],
+    })
+  );
+
+  //facebook auth callback handler
+  router.get(
+    routePaths.facebookAuthCallback,
+    passport.authenticate(authTypes.facebook, {
+      failureRedirect: routePaths.authFail,
+      session: true,
+    }),
+    function (req, res) {
+      return res.redirect(routePaths.authSuccess);
+    }
+  );
+
+  //twitter auth request handler
+  router.get(
+    routePaths.twitterAuth,
+    // (req, res, next) => {
+    //   console.log("===> twitter auth calling..");
+    //   next();
+    // },
+    passport.authenticate(authTypes.twitter, {
+      // scope: [authScopes.profile],
+      scope: ["user_friends", "manage_pages"],
+    })
+  );
+
+  //twitter auth callback handler
+  router.get(
+    routePaths.twitterAuthCallback,
+    passport.authenticate(authTypes.twitter, {
+      failureRedirect: routePaths.authFail,
+      session: true,
+    }),
+    function (req, res) {
+      return res.redirect(routePaths.authSuccess);
+    }
+  );
+
+  //spotify auth request handler
+  router.get(
+    routePaths.spotifyAuth,
+    passport.authenticate(authTypes.spotify, {
+      scope: ["user-read-email", "user-read-private"],
+    })
+  );
+
+  //spotify auth callback handler
+  router.get(
+    routePaths.spotifyAuthCallback,
+    passport.authenticate(authTypes.spotify, {
+      failureRedirect: routePaths.authFail,
+      session: true,
+    }),
+    function (req, res) {
+      return res.redirect(routePaths.authSuccess);
+    }
+  );
+
+  //twitch auth request handler
+  router.get(
+    routePaths.twitchAuth,
+    passport.authenticate(authTypes.twitch, {
+      scope: "user_read",
+    })
+  );
+
+  //twitch auth callback handler
+  router.get(
+    routePaths.twitchAuthCallback,
+    passport.authenticate(authTypes.twitch, {
+      failureRedirect: routePaths.authFail,
+      session: true,
+    }),
+    function (req, res) {
+      return res.redirect(routePaths.authSuccess);
+    }
+  );
+
+  //get authenticated user
   router.get(routePaths.getUser, isUserAuthenticated, (req, res) => {
     return res
       .status(statusCodes.success)
       .json({ user: req.user, message: messages.userFetched });
   });
 
+  //logout
   router.get(routePaths.logout, (req, res, next) => {
     if (req.user) {
       req.session = null;
