@@ -1,5 +1,5 @@
 import { authActions, userActions } from "./actions.types";
-import axios from "axios";
+import axios from "../Axios/axios";
 import { apiPath } from "../../utils/constants";
 
 export const fetchUserDetails = () => {

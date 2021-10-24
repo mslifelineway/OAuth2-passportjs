@@ -1,6 +1,6 @@
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import React from "react";
-import { Layout } from "../components";
+import Layout from "../components/Layout";
 
 const Page404 = () => {
   return (
