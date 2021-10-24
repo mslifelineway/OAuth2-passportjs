@@ -25,6 +25,6 @@
     "passport-instagram": "^1.0.0",
     "passport-linkedin": "^1.0.0",
     "passport-spotify": "^2.0.0",
-    "passport-twitter": "^1.0.4"
+    "passport-twitter": "^0.1.5"
   }
 }
