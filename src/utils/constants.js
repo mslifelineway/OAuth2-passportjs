@@ -1,5 +1,6 @@
 exports.urls = {
-  clientUrl: "http://localhost:3000",
+  // clientUrl: "http://localhost:3000",
+  clientUrl: "https://passportjs-auth.netlify.app",
   googleAuthRedirectUrl: "auth/google/callback",
   gitHubAuthRedirectUrl: "auth/github/callback",
   linkedinAuthRedirectUrl: "auth/linkedin/callback",
