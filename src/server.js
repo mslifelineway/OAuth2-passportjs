@@ -8,13 +8,13 @@ const router = express.Router();
 const port = process.env.PORT || 5000;
 const passport = require("passport");
 
-const { statusCodes, errors } = require("./utils/constants");
+const { statusCodes, errors, urls } = require("./utils/constants");
 const User = require("./models/user.model");
 const cookieSession = require("cookie-session");
 
 server.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: urls.clientUrl,
     credentials: true,
   })
 );
