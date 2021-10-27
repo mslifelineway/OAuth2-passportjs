@@ -44,12 +44,15 @@ passport.deserializeUser((id, done) => {
 //passport setup milddeware - should be before linking routers
 require("./middlewares/passport.setup.middleware");
 
-//linking routers
-fs.readdirSync(__dirname + "/routes").forEach(function (file) {
-  const name = file.substr(0, file.indexOf("."));
-  const route = require(`./routes/${file}`)(router, server);
-  server.use(`/api/${name}`, route);
-});
+const authRoute1 = require("./routes/auth.route1");
+server.use("/api/auth", authRoute1);
+
+// //linking routers
+// fs.readdirSync(__dirname + "/routes").forEach(function (file) {
+//   const name = file.substr(0, file.indexOf("."));
+//   const route = require(`./routes/${file}`)(router, server);
+//   server.use(`/api/${name}`, route);
+// });
 
 //error handling
 server.use((err, req, res, next) => {
