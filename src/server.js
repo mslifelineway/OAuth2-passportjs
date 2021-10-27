@@ -44,6 +44,12 @@ passport.deserializeUser((id, done) => {
 //passport setup milddeware - should be before linking routers
 require("./middlewares/passport.setup.middleware");
 
+server.get("/", (_, res) => {
+  res.json({
+    message: "🦄🌈✨👋🌎🌍🌏✨🌈🦄",
+  });
+});
+
 //linking routers
 fs.readdirSync(__dirname + "/routes").forEach(function (file) {
   const name = file.substr(0, file.indexOf("."));
@@ -59,12 +65,6 @@ server.use((err, req, res, next) => {
       status: err.status || statusCodes.internalServerError,
       message: err.message || errors.somethingSeemsWrong,
     },
-  });
-});
-
-server.get("/", (_, res) => {
-  res.json({
-    message: "🦄🌈✨👋🌎🌍🌏✨🌈🦄",
   });
 });
 
