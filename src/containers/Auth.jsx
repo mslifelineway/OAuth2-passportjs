@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { Box, Button, Typography } from "@material-ui/core";
-import { apiPath, pagePaths } from "../utils/constants";
+import { pagePaths } from "../utils/constants";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserDetails } from "../redux/actions/auth.actions";
 import Layout from "../components/Layout";
+import { api } from "../redux/Axios/urlConfig";
 
 const Auth = () => {
   const history = useHistory();
@@ -89,7 +90,7 @@ const Auth = () => {
       key={key}
       variant="contained"
       color="default"
-      onClick={() => redirectToSSO(`${apiPath}/auth${btn.link}`)}
+      onClick={() => redirectToSSO(`${api}/auth${btn.link}`)}
       style={{
         background: btn.background,
         color: btn.color || "#fff",

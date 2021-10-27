@@ -1,12 +1,11 @@
 import { authActions, userActions } from "./actions.types";
 import axios from "../Axios/axios";
-import { apiPath } from "../../utils/constants";
 
 export const fetchUserDetails = () => {
   return async (dispatch) => {
     dispatch({ type: userActions.getUserRequest });
     try {
-      const res = await axios.get(`${apiPath}/auth/getuser`, {
+      const res = await axios.get(`/auth/getuser`, {
         withCredentials: true,
       });
 
@@ -31,7 +30,7 @@ export const logout = () => {
   return async (dispatch) => {
     dispatch({ type: authActions.logoutRequest });
     try {
-      const res = await axios.get(`${apiPath}/auth/logout`, {
+      const res = await axios.get(`/auth/logout`, {
         withCredentials: true,
       });
       dispatch({
